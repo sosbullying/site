@@ -1,0 +1,27 @@
+<script>
+  var d1 = new Date();
+  d1.setDate(d1.getDate() + 25);
+  var d2 = new Date();
+  d2.setDate(d2.getDate() + 35);
+  var months = {
+    0: "Janeiro",
+    1: "Fevereiro",
+    2: "Março",
+    3: "Abril",
+    4: "Maio",
+    5: "Junho",
+    6: "Julho",
+    7: "Agosto",
+    8: "Setembro",
+    9: "Outubro",
+    10: "Novembro",
+    11: "Dezembro"
+  };
+  
+  const getMonthName = (month) => months[month];
+  
+  jQuery('.shipping-time').html('');
+  jQuery('.shipping-time').html(`<i class="fas fa-truck" data-fa-transform="rotate-90"></i> Entrega est: ${d1.getDate()} a ${d2.getDate()} de ${getMonthName(d2.getMonth())} de ${d2.getFullYear()}`);    
+
+
+</script>

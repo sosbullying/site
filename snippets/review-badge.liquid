@@ -1,0 +1,11 @@
+<div class="review-badge">
+  {% if badge_template == "product" %}
+    <!-- INSERT [PRODUCT PAGE] REVIEW BADGE HERE -->
+<a href="#looxReviews"><div class="loox-rating" data-id="{{ product.id }}" data-rating="{{ product.metafields.loox.avg_rating }}" data-raters="{{ product.metafields.loox.num_reviews }}"></div></a>
+    
+  {% elsif badge_template == "grid" %}
+    <!-- INSERT [PRODUCT GRID] REVIEW BADGE HERE -->
+<div class="loox-rating" data-id="{{ product.id }}" data-rating="{{ product.metafields.loox.avg_rating }}" data-raters="{{ product.metafields.loox.num_reviews }}"></div>
+    
+  {% endif %}
+</div>
