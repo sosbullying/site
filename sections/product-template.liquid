@@ -1,0 +1,165 @@
+{% comment %}
+  The contents of the product.liquid template can be found in /snippets/product-template.liquid
+{% endcomment %}
+<div id="section-{{ section.id }}" data-section-id="{{ section.id }}" data-section-type="product-template" data-enable-history-state="true" data-scroll-to-image="{% if section.settings.image_layout == "stacked" %}true{% else %}false{% endif %}">
+  {% include 'product-template' %}
+</div>
+
+{% unless product.empty == empty %}
+  <script type="application/json" id="ProductJson-{{ section.id }}">
+    {{ product | json }}
+  </script>
+{% endunless %}
+
+{% schema %}
+  {
+    "name": "Product pages",
+	"class": "product-section",
+    "settings": [
+	  {
+        "type": "header",
+        "content": "Product photos"
+      },
+	  {
+        "type": "select",
+        "id": "image_layout",
+        "label": "Image display",
+        "default": "stacked",
+        "options": [
+		  {
+            "value": "stacked",
+            "label": "Stacked"
+          },
+ 		  {
+            "value": "thumbnail",
+            "label": "Thumbnail"
+          }
+        ]
+      },
+	  {
+        "type": "select",
+        "id": "product_photo_alignement",
+        "label": "Image alignement",
+        "default": "left",
+        "options": [
+          {
+            "value": "left",
+            "label": "Left"
+          },
+          {
+            "value": "right",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_zoom",
+        "label": "Enable image zoom",
+		"default": true
+      },
+	  {
+        "type": "header",
+        "content": "Product details"
+      },
+	  {
+        "type": "checkbox",
+        "id": "product_vendor",
+        "label": "Show vendor",
+        "default": false
+      },
+	  {
+        "type": "checkbox",
+        "id": "product_title_size",
+        "label": "Big product tite",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "product_header_alignement",
+        "label": "Alignement",
+        "default": "",
+        "options": [
+          {
+            "value": "",
+            "label": "Left"
+          },
+          {
+            "value": "text-center",
+            "label": "Center"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "product_selector",
+        "label": "Variant picker type",
+        "options": [
+          {
+            "value": "radio",
+            "label": "Button"
+          },
+          {
+            "value": "select",
+            "label": "Dropdown"
+          }
+        ]
+      },
+	  {
+        "type": "checkbox",
+        "id": "quantity_enabled",
+        "label": "Show quantity picker"
+      },
+	  {
+        "type": "checkbox",
+        "id": "button_cart_icon",
+        "label": "Show button icon",
+        "default": true
+      },
+	  {
+        "type": "checkbox",
+        "id": "enable_payment_button",
+        "label": "Show dynamic checkout button",
+        "info": "Lets customers check out directly using a familiar payment method. [Learn more](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show_description",
+        "label": "Show description",
+        "default": true
+      },
+	  {
+        "type": "checkbox",
+        "id": "social_sharing_products",
+        "label": "Enable product sharing",
+        "default": true
+      },
+	  {
+        "type": "checkbox",
+        "id": "show_product_tags",
+        "label": "Show product tags",
+        "default": true
+      }
+    ]
+  }
+{% endschema %}
+
+{% if product.metafields.loox.num_reviews %}
+<script id="looxSchemaJson" type="application/ld+json">
+{
+	"@context": "http://schema.org",
+	"@type": "Product",
+	"@id": {{ canonical_url | json }},
+	"aggregateRating": {
+		"@type": "AggregateRating",
+		"ratingValue": "{{ product.metafields.loox.avg_rating }}",
+		"reviewCount": "{{ product.metafields.loox.num_reviews }}"
+	},
+	"name": {{ product.title | json }}
+}
+</script>
+{% endif %}
+
+
+	<div id="looxReviews" data-product-id="{{product.id}}" class="loox-reviews-default">{{ product.metafields.loox.reviews }}</div>
